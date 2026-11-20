@@ -1,0 +1,2185 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moyamoya Disease | العرض التقديمي العلمي - مؤتمر طرابلس</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ========================================================
+           ROOT VARIABLES & THEME (Dark Luxury Medical Cyan/Navy)
+           ======================================================== */
+        :root {
+            --bg-deep: #020f20;
+            --bg-surface: #041b38;
+            --bg-card: rgba(8, 30, 60, 0.72);
+            --bg-card-hover: rgba(14, 45, 88, 0.85);
+            --border-glow: rgba(0, 229, 255, 0.28);
+            --border-glow-bright: rgba(0, 229, 255, 0.65);
+            
+            --cyan: #00E5FF;
+            --cyan-glow: rgba(0, 229, 255, 0.25);
+            --cyan-dim: rgba(0, 229, 255, 0.12);
+            --blue-vibrant: #1E88E5;
+            --blue-soft: #64B5F6;
+            --coral-alert: #FF5252;
+            --amber-warn: #FFB300;
+            --emerald-good: #00E676;
+
+            --text-pure: #FFFFFF;
+            --text-heading: #F0F9FF;
+            --text-body: #C2DBF0;
+            --text-dim: #7FA3C2;
+
+            --font-ar: 'Cairo', system-ui, sans-serif;
+            --font-en: 'Inter', system-ui, sans-serif;
+            --font-mono: 'Fira Code', monospace;
+
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-card: 0 16px 40px -10px rgba(0, 0, 0, 0.55), 0 0 20px rgba(0, 229, 255, 0.08);
+            --shadow-glow: 0 0 35px rgba(0, 229, 255, 0.3);
+        }
+
+        /* ========================================================
+           GLOBAL RESETS
+           ======================================================== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--bg-deep);
+            color: var(--text-body);
+            font-family: var(--font-ar);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ========================================================
+           DYNAMIC BACKGROUND CANVAS & PARTICLES
+           ======================================================== */
+        .viewport-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 229, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.04) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.7;
+        }
+
+        .bg-radial-glow {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 15% 20%, rgba(30, 136, 229, 0.18) 0%, transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(0, 229, 255, 0.14) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(2, 15, 32, 0.9) 30%, #010811 100%);
+        }
+
+        #synapseCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.45;
+        }
+
+        /* ========================================================
+           TOP CONTROL BAR & PROGRESS BAR
+           ======================================================== */
+        .progress-track {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 10%;
+            background: linear-gradient(90deg, var(--blue-vibrant), var(--cyan));
+            box-shadow: 0 0 12px var(--cyan);
+            transition: width 0.4s ease;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 4px;
+            left: 0;
+            right: 0;
+            height: 64px;
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(3, 23, 47, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(0, 229, 255, 0.12);
+            z-index: 900;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+        }
+
+        .nav-logo {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.5));
+            transition: var(--transition-smooth);
+        }
+
+        .nav-brand:hover .nav-logo {
+            transform: scale(1.08) rotate(-4deg);
+        }
+
+        .nav-titles {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-title-en {
+            font-family: var(--font-en);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--cyan);
+            line-height: 1.1;
+        }
+
+        .nav-title-ar {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            font-weight: 500;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .counter-badge {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--cyan);
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid rgba(0, 229, 255, 0.25);
+            padding: 5px 14px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .counter-badge span.total {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        .btn-icon {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            color: var(--text-body);
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-size: 0.9rem;
+        }
+
+        .btn-icon:hover {
+            background: rgba(0, 229, 255, 0.15);
+            border-color: var(--cyan);
+            color: var(--cyan);
+            box-shadow: 0 0 12px var(--cyan-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon.active {
+            background: var(--cyan);
+            color: #011124;
+            border-color: var(--cyan);
+        }
+
+        .timer-badge {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            background: rgba(0, 0, 0, 0.35);
+            padding: 4px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ========================================================
+           MAIN SLIDE VIEWPORT & TRANSITIONS
+           ======================================================== */
+        .presentation-deck {
+            position: absolute;
+            inset: 68px 0 76px 0;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1200px;
+        }
+
+        .slide {
+            position: absolute;
+            width: min(1360px, 94vw);
+            height: min(740px, 84vh);
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 42px 50px;
+            box-shadow: var(--shadow-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.92) translateY(30px);
+            transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+                        transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1) translateY(0);
+            z-index: 20;
+        }
+
+        .slide.prev-slide {
+            opacity: 0;
+            transform: scale(0.94) translateY(-30px);
+        }
+
+        .slide.next-slide {
+            opacity: 0;
+            transform: scale(0.94) translateY(30px);
+        }
+
+        /* ========================================================
+           SLIDE HEADER & INNER STRUCTURE
+           ======================================================== */
+        .slide-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 26px;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+            padding-bottom: 18px;
+            flex-shrink: 0;
+        }
+
+        .slide-title-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .slide-tag {
+            font-family: var(--font-en);
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--cyan);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .slide-tag::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--cyan);
+            box-shadow: 0 0 8px var(--cyan);
+        }
+
+        .slide-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-pure);
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+        }
+
+        .slide-subtitle-en {
+            font-family: var(--font-en);
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: var(--blue-soft);
+        }
+
+        .slide-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 6px;
+            display: flex;
+            gap: 36px;
+            align-items: stretch;
+        }
+
+        .slide-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .slide-content::-webkit-scrollbar-thumb {
+            background: rgba(0, 229, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        /* ========================================================
+           LAYOUT GRIDS & REUSABLE COMPONENTS
+           ======================================================== */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 32px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .equal-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            width: 100%;
+        }
+
+        .three-col-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+            width: 100%;
+        }
+
+        .six-grid-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 18px;
+            width: 100%;
+        }
+
+        /* Cards */
+        .glass-card {
+            background: rgba(5, 25, 52, 0.6);
+            border: 1px solid rgba(0, 229, 255, 0.16);
+            border-radius: 16px;
+            padding: 22px;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--cyan);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--cyan);
+            box-shadow: 0 12px 30px -8px rgba(0, 229, 255, 0.2);
+            background: rgba(8, 35, 72, 0.85);
+        }
+
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(0, 229, 255, 0.12);
+            color: var(--cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-bottom: 14px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-pure);
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+
+        /* Medical Imagery Box */
+        .medical-image-box {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .medical-image-box:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.4);
+            transform: scale(1.02);
+        }
+
+        .medical-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .medical-image-box:hover img {
+            transform: scale(1.05);
+        }
+
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(0deg, rgba(2, 15, 32, 0.95) 0%, transparent 100%);
+            padding: 18px 14px 10px;
+            font-size: 0.85rem;
+            color: var(--cyan);
+            font-weight: 600;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .zoom-hint {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            backdrop-filter: blur(4px);
+        }
+
+        /* Lists & Bullet points */
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 12px 16px;
+            background: rgba(0, 229, 255, 0.04);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 229, 255, 0.08);
+            transition: var(--transition-smooth);
+        }
+
+        .feature-item:hover {
+            background: rgba(0, 229, 255, 0.1);
+            border-color: rgba(0, 229, 255, 0.25);
+            transform: translateX(-4px);
+        }
+
+        .feature-bullet {
+            color: var(--cyan);
+            font-size: 1.1rem;
+            margin-top: 3px;
+        }
+
+        .feature-text strong {
+            color: var(--text-pure);
+            display: block;
+            margin-bottom: 2px;
+            font-size: 1.05rem;
+        }
+
+        /* Stat Counter Pill */
+        .stat-pill {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            background: rgba(0, 229, 255, 0.06);
+            border-radius: 16px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+        }
+
+        .stat-num {
+            font-family: var(--font-en);
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--cyan);
+            line-height: 1;
+            text-shadow: 0 0 15px var(--cyan-glow);
+        }
+
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-pure);
+        }
+
+        .stat-sub {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        /* ========================================================
+           SLIDE-SPECIFIC CUSTOM STYLES
+           ======================================================== */
+        /* Slide 1: Cover Slide */
+        .cover-slide {
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .cover-content {
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            z-index: 2;
+        }
+
+        .cover-logo-halo {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin-bottom: 8px;
+        }
+
+        .cover-logo-halo::after {
+            content: '';
+            position: absolute;
+            inset: -15px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--cyan-glow) 0%, transparent 70%);
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        .cover-logo {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 0 25px rgba(0, 229, 255, 0.6));
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 24px;
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--cyan);
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--cyan);
+            letter-spacing: 1px;
+            box-shadow: 0 0 18px rgba(0, 229, 255, 0.25);
+        }
+
+        .cover-main-title {
+            font-size: 3.2rem;
+            font-weight: 900;
+            color: var(--text-pure);
+            line-height: 1.2;
+            text-shadow: 0 4px 25px rgba(0, 0, 0, 0.8);
+        }
+
+        .cover-subtitle-en {
+            font-family: var(--font-en);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--blue-soft);
+            letter-spacing: 2px;
+        }
+
+        .cover-organizer {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 1.1rem;
+            color: var(--text-body);
+            background: rgba(4, 27, 56, 0.8);
+            padding: 10px 28px;
+            border-radius: 50px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+        }
+
+        .cover-organizer strong {
+            color: var(--cyan);
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(0.9); opacity: 0.4; }
+            100% { transform: scale(1.15); opacity: 0.85; }
+        }
+
+        /* Slide 4: Complications 6 cards */
+        .comp-card {
+            background: rgba(6, 26, 54, 0.7);
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            border-radius: 14px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            transition: var(--transition-smooth);
+        }
+
+        .comp-card:hover {
+            border-color: var(--cyan);
+            background: rgba(10, 42, 85, 0.85);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 229, 255, 0.15);
+        }
+
+        .comp-num {
+            font-family: var(--font-mono);
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--cyan);
+            background: rgba(0, 229, 255, 0.1);
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .comp-info h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-pure);
+            margin-bottom: 4px;
+        }
+
+        .comp-info p {
+            font-size: 0.88rem;
+            color: var(--text-body);
+            line-height: 1.45;
+        }
+
+        /* Slide 9: Surgery Dual Cards */
+        .surgery-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            width: 100%;
+        }
+
+        .surgery-box {
+            background: rgba(4, 27, 56, 0.75);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 18px;
+            padding: 24px;
+            position: relative;
+        }
+
+        .surgery-box.highlighted {
+            border-color: var(--cyan);
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.18);
+        }
+
+        .surgery-badge {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(0, 229, 255, 0.15);
+            color: var(--cyan);
+            margin-bottom: 12px;
+        }
+
+        /* ========================================================
+           BOTTOM CONTROLS BAR
+           ======================================================== */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 72px;
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(2, 15, 32, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(0, 229, 255, 0.12);
+            z-index: 900;
+        }
+
+        .bottom-left-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .hotkeys-hint {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .kbd {
+            font-family: var(--font-mono);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2px 7px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            color: var(--cyan);
+        }
+
+        .nav-buttons-center {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn-nav {
+            background: linear-gradient(135deg, rgba(30, 136, 229, 0.4), rgba(0, 229, 255, 0.3));
+            border: 1px solid var(--cyan);
+            color: var(--text-pure);
+            padding: 10px 22px;
+            border-radius: 12px;
+            font-family: var(--font-ar);
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition-smooth);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.15);
+        }
+
+        .btn-nav:hover {
+            background: linear-gradient(135deg, var(--blue-vibrant), var(--cyan));
+            color: #011124;
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px var(--cyan);
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Slide Dots Indicator */
+        .slide-dots {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .dot:hover {
+            background: rgba(0, 229, 255, 0.6);
+            transform: scale(1.3);
+        }
+
+        .dot.active {
+            background: var(--cyan);
+            width: 28px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px var(--cyan);
+        }
+
+        /* ========================================================
+           FULLSCREEN IMAGE MODAL / LIGHTBOX
+           ======================================================== */
+        .image-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(1, 10, 22, 0.94);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-modal.open {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content-wrap {
+            max-width: 90vw;
+            max-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .modal-img {
+            max-width: 100%;
+            max-height: 75vh;
+            object-fit: contain;
+            border-radius: 14px;
+            border: 2px solid var(--cyan);
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.4);
+        }
+
+        .modal-caption {
+            font-size: 1.1rem;
+            color: var(--cyan);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 24px;
+            right: 32px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--cyan);
+            color: #fff;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .modal-close-btn:hover {
+            background: var(--coral-alert);
+            border-color: var(--coral-alert);
+            transform: rotate(90deg);
+        }
+
+        /* ========================================================
+           SPEAKER NOTES DRAWER (POPUP)
+           ======================================================== */
+        .notes-drawer {
+            position: fixed;
+            bottom: 76px;
+            left: 28px;
+            width: 380px;
+            background: rgba(4, 23, 49, 0.95);
+            border: 1px solid var(--border-glow);
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(25px);
+            z-index: 850;
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .notes-drawer.open {
+            display: flex;
+            animation: slideUp 0.3s ease;
+        }
+
+        .notes-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+            padding-bottom: 8px;
+        }
+
+        .notes-header h5 {
+            color: var(--cyan);
+            font-size: 0.95rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .notes-body {
+            font-size: 0.88rem;
+            line-height: 1.55;
+            color: var(--text-body);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* ========================================================
+           OVERVIEW GRID MODAL (PRESS 'O')
+           ======================================================== */
+        .overview-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(1, 10, 25, 0.96);
+            backdrop-filter: blur(24px);
+            z-index: 1500;
+            display: none;
+            flex-direction: column;
+            padding: 30px 50px;
+            overflow-y: auto;
+        }
+
+        .overview-modal.open {
+            display: flex;
+        }
+
+        .overview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .overview-card {
+            background: rgba(5, 27, 56, 0.8);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 14px;
+            padding: 16px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .overview-card:hover {
+            border-color: var(--cyan);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 229, 255, 0.25);
+            background: rgba(10, 42, 85, 0.9);
+        }
+
+        .overview-card.current {
+            border-color: var(--cyan);
+            background: rgba(0, 229, 255, 0.12);
+            box-shadow: 0 0 18px var(--cyan-glow);
+        }
+
+        .overview-card-num {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--cyan);
+            font-weight: 700;
+        }
+
+        .overview-card-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-pure);
+        }
+
+        /* ========================================================
+           LASER POINTER MODE
+           ======================================================== */
+        .laser-pointer {
+            position: fixed;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #FF0055;
+            box-shadow: 0 0 14px 4px #FF0055, 0 0 25px 8px rgba(255, 0, 85, 0.6);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            display: none;
+            transition: opacity 0.1s ease;
+        }
+
+        /* Responsive Media Queries */
+        @media (max-width: 1024px) {
+            .slide {
+                padding: 28px 32px;
+            }
+            .two-col, .equal-two-col {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .six-grid-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .slide-title {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dynamic Background -->
+    <div class="viewport-bg">
+        <div class="bg-grid"></div>
+        <div class="bg-radial-glow"></div>
+        <canvas id="synapseCanvas"></canvas>
+    </div>
+
+    <!-- Virtual Laser Pointer -->
+    <div class="laser-pointer" id="laserPointer"></div>
+
+    <!-- Top Progress Bar -->
+    <div class="progress-track">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-brand" onclick="goToSlide(0)">
+            <img src="logo.png" alt="Moyamoya Conference Logo" class="nav-logo">
+            <div class="nav-titles">
+                <span class="nav-title-en">MOYAMOYA TRIPOLI CONFERENCE</span>
+                <span class="nav-title-ar">المؤتمر العلمي الطبي لمرض مويا مويا</span>
+            </div>
+        </div>
+
+        <div class="nav-actions">
+            <div class="timer-badge" title="زمن العرض">
+                <i class="fa-regular fa-clock" style="color:var(--cyan)"></i>
+                <span id="presentationTimer">00:00</span>
+            </div>
+
+            <div class="counter-badge">
+                <span id="currentSlideNum">01</span>
+                <span class="total">/ 10</span>
+            </div>
+
+            <button class="btn-icon" id="laserBtn" title="تفعيل مؤشر الليزر (L)" onclick="toggleLaser()">
+                <i class="fa-solid fa-crosshairs"></i>
+            </button>
+
+            <button class="btn-icon" id="notesBtn" title="ملاحظات المتحدث (N)" onclick="toggleNotes()">
+                <i class="fa-regular fa-clipboard"></i>
+            </button>
+
+            <button class="btn-icon" id="overviewBtn" title="فهرس الشرائح (O)" onclick="toggleOverview()">
+                <i class="fa-solid fa-table-cells-large"></i>
+            </button>
+
+            <button class="btn-icon" id="fullscreenBtn" title="ملء الشاشة (F)" onclick="toggleFullscreen()">
+                <i class="fa-solid fa-expand"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ========================================================
+         MAIN PRESENTATION DECK (10 INTERACTIVE SLIDES)
+         ======================================================== -->
+    <main class="presentation-deck" id="deck">
+
+        <!-- ================= SLIDE 1: COVER ================= -->
+        <section class="slide cover-slide active" data-index="0" data-notes="شريحة البداية والافتتاح: الترحيب بالحضور وأعضاء هيئة التدريس والأطباء، إبراز عنوان المؤتمر والجهة المنظمة (مبادرة تنفس وعي).">
+            <div class="cover-content">
+                <div class="cover-logo-halo">
+                    <img src="logo.png" alt="Moyamoya Logo" class="cover-logo">
+                </div>
+
+                <div class="badge-pill">
+                    <i class="fa-solid fa-brain"></i>
+                    <span>جلسة العرض العلمي التخصصي | NEUROVASCULAR SESSION</span>
+                </div>
+
+                <h1 class="cover-main-title">مرض مويا مويا<br><span style="color:var(--cyan); font-family:var(--font-en); font-weight:800;">MOYAMOYA DISEASE (MMD)</span></h1>
+                
+                <p class="cover-subtitle-en">Etiology, Pathophysiology, Diagnosis & Modern Surgical Interventions</p>
+
+                <div class="cover-organizer">
+                    <i class="fa-solid fa-hospital-user" style="color:var(--cyan)"></i>
+                    <span>مؤتمر طرابلس الطبي &bull; تنظيم: <strong>مبادرة تنفّس وعي</strong></span>
+                    <span style="opacity: 0.5;">|</span>
+                    <span style="color:var(--blue-soft); font-weight:600;">"نحن صنّاع الأمل"</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SLIDE 2: DEFINITION & PATHOPHYSIOLOGY ================= -->
+        <section class="slide" data-index="1" data-notes="التعريف: اضطراب نادر وانسدادي، يصيب الشريان السباتي الباطن. التركيز على التسمية اليابانية (نفثة الدخان) وكيف يحاول الدماغ التعويض عبر تكوين أوعية هشة.">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <div class="slide-tag">المفهوم والفيزيولوجيا المرضية &bull; Pathophysiology</div>
+                    <h2 class="slide-title">ما هو مرض مويا مويا؟ <span class="slide-subtitle-en">Understanding MMD</span></h2>
+                </div>
+            </div>
+            
+            <div class="slide-content">
+                <div class="two-col">
+                    <div style="display:flex; flex-direction:column; gap:20px;">
+                        <div class="glass-card">
+                            <div class="card-icon"><i class="fa-solid fa-lungs-virus"></i></div>
+                            <h3 class="card-title">التعريف الطبي الدقيق (Clinical Definition)</h3>
+                            <p class="card-desc">
+                                هو <strong>اضطراب وعائي دماغي انسدادي مزمن ونادر</strong> (Rare, Chronic, Occlusive Cerebrovascular Disorder)، يتميز بحدوث تضيق تدريجي مطّرد في النهايات الطرفية للشرايين السباتية الباطنة (Terminal Internal Carotid Arteries) وتفرعاتها القريبة.
+                            </p>
+                        </div>
+
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <i class="fa-solid fa-triangle-exclamation feature-bullet" style="color:var(--amber-warn);"></i>
+                                <div class="feature-text">
+                                    <strong>نقص التروية المزمن (Chronic Hypoperfusion)</strong>
+                                    انخفاض حاد في تدفق الدم المؤكسج إلى قشرة الدماغ يضع الأنسجة العصبية في حالة تهديد دائم.
+                                </div>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fa-solid fa-circle-nodes feature-bullet"></i>
+                                <div class="feature-text">
+                                    <strong>الأوعية الجانبية الشاذة (Abnormal Collaterals)</strong>
+                                    يحاول الجسم تعويض الانسداد ببناء شبكة شبيهة بـ "نفثة الدخان" هشة وقابلة للتمزق.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div style="display:flex; flex-direction:column; gap:16px;">
+                        <div class="medical-image-box" style="height:260px;" onclick="openImageModal('media/image4.jpg', 'تضيق الشريان السباتي الباطن الطرفي وتراجع التروية الشريانية')">
+                            <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> تكبير</span>
+                            <img src="media/image4.jpg" alt="ICA Stenosis Diagram">
+                            <div class="image-caption"><i class="fa-solid fa-microscope"></i> مخطط تضيق الشريان السباتي الباطن (ICA)</div>
+                        </div>
+
+                        <div class="stat-pill">
+                            <div class="stat-num">もや</div>
+                            <div class="stat-info">
+                                <div class="stat-title">الأصل اللغوي للاسم: "Moyamoya"</div>
+                                <div class="stat-sub">كلمة يابانية تعني حرفياً <em>"نفثة أو سحابة الدخان"</em> لتشابه المنظر الوعائي بالأشعة.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SLIDE 3: PUFF OF SMOKE PHENOMENON ================= -->
+        <section class="slide" data-index="2" data-notes="شرح ظاهرة نفثة الدخان: استعراض صور القسطرة DSA والرنين. المقارنة بين الشبكة الطبيعية للأوعية الدماغية والشبكة الضعيفة التي تتشكل في قاعدة الدماغ.">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <div class="slide-tag">الظاهرة الشعاعية الفارقة &bull; Angiographic Hallmark</div>
+                    <h2 class="slide-title">ظاهرة "نفثة الدخان" <span class="slide-subtitle-en">The Puff-of-Smoke Sign</span></h2>
+                </div>
+            </div>
+
+            <div class="slide-content">
+                <div class="two-col">
+                    <div style="display:flex; flex-direction:column; gap:18px;">
+                        <div class="glass-card">
+                            <h3 class="card-title" style="color:var(--cyan);"><i class="fa-solid fa-smog"></i> كيف تتشكل سحابة الدخان الوعائية؟</h3>
+                            <p class="card-desc">
+                                عندما تفشل الشرايين الرئيسية في إيصال الدم، تتوسع الشرايين الثاقبة الصغيرة القاعدية (Lenticulostriate & Thalamoperforating arteries) وتتشابك مع تفرعات السحايا والأوعية السطحية مكونة شبكة متكتلة تظهر كالدخان المتصاعد في القسطرة الظليلة.
+                            </p>
+                        </div>
+
+                        <div class="feature-item" style="border-right: 4px solid var(--cyan);">
+                            <i class="fa-solid fa-circle-check feature-bullet"></i>
+                            <div class="feature-text">
+                                <strong>قسطرة الشرايين الرقمية (DSA)</strong>
+                                تمثل هذه الصورة الشعاعية العلامة التشخيصية الحاسمة والمرجعية للمرض دولياً.
+                            </div>
+                        </div>
+
+                        <div class="feature-item" style="border-right: 4px solid var(--coral-alert);">
+                            <i class="fa-solid fa-heart-crack feature-bullet" style="color:var(--coral-alert);"></i>
+                            <div class="feature-text">
+                                <strong>هشاشة الجدران الوعائية</strong>
+                                جدران هذه الأوعية التعويضية تفتقر إلى الطبقة المرنة وتتصف بالضعف الهيكلي الشديد.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px;">
+                        <div class="medical-image-box" style="height:280px;" onclick="openImageModal('media/image1.jpg', 'صورة القسطرة الوعائية الدماغية تُظهر العلامة الفارقة لمرض مويا مويا')">
+                            <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
+                            <img src="media/image1.jpg" alt="Cerebral Angiogram 1">
+                            <div class="image-caption">القسطرة الظليلة (DSA)</div>
+                        </div>
+
+                        <div class="medical-image-box" style="height:280px;" onclick="openImageModal('media/image2.png', 'التفرعات التعويضية الدقيقة في شبكة الأوعية القاعدية')">
+                            <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
+                            <img src="media/image2.png" alt="Cerebral Angiogram 2">
+                            <div class="image-caption">الأوعية الجانبية الشاذة</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SLIDE 4: COMPLICATIONS (6 THREATS) ================= -->
+        <section class="slide" data-index="3" data-notes="المضاعفات الست الخطيرة: النزيف، السكتات الإقفارية، نوبات نقص التروية، أمهات الدم الدقيقة، النزوف الدقيقة، والحرمان المزمن من الأكسجين.">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <div class="slide-tag">المخاطر السريرية &bull; Clinical Complications</div>
+                    <h2 class="slide-title">مضاعفات الأوعية الجانبية الشاذة <span class="slide-subtitle-en">Major Vascular Hazards</span></h2>
+                </div>
+            </div>
+
+            <div class="slide-content">
+                <div class="six-grid-cards">
+                    <!-- 1 -->
+                    <div class="comp-card">
+                        <div class="comp-num">01</div>
+                        <div class="comp-info">
+                            <h4>النزيف داخل القحف (Intracranial Hemorrhage)</h4>
+                            <p>تمزق الأوعية الجانبية الهشة تحت ضغط الدم، مسبباً نزيفاً تحت العنكبوتية أو نزيفاً بطينياً خطيراً.</p>
+                        </div>
+                    </div>
+
+                    <!-- 2 -->
+                    <div class="comp-card">
+                        <div class="comp-num">02</div>
+                        <div class="comp-info">
+                            <h4>السكتة الإقفارية (Ischemic Stroke)</h4>
+                            <p>عجز الشبكة الوعائية التعويضية عن توفير كمية كافية من الدم للأنسجة، مما يؤدي لموت خلايا الدماغ.</p>
+                        </div>
+                    </div>
+
+                    <!-- 3 -->
+                    <div class="comp-card">
+                        <div class="comp-num">03</div>
+                        <div class="comp-info">
+                            <h4>نوبات نقص التروية العابرة (TIAs)</h4>
+                            <p>هبوط مفاجئ مؤقت في التدفق الدماغي ينتج عنه فقدان مؤقت للوظائف الحركية أو النطق.</p>
+                        </div>
+                    </div>
+
+                    <!-- 4 -->
+                    <div class="comp-card">
+                        <div class="comp-num">04</div>
+                        <div class="comp-info">
+                            <h4>تكوّن أمهات الدم الدقيقة (Microaneurysms)</h4>
+                            <p>تمددات جدارية كيسية صغيرة على الأوعية الضعيفة تتضاعف معها احتمالية الانفجار والنزف.</p>
+                        </div>
+                    </div>
+
+                    <!-- 5 -->
+                    <div class="comp-card">
+                        <div class="comp-num">05</div>
+                        <div class="comp-info">
+                            <h4>النزوف الدقيقة داخل الدماغ (Cerebral Microbleeds)</h4>
+                            <p>تسريب مزمن ومجهري لكريات الدم الحمراء داخل المادة الدماغية يسرّع التدهور المعرفي.</p>
+                        </div>
+                    </div>
+
+                    <!-- 6 -->
+                    <div class="comp-card">
+                        <div class="comp-num">06</div>
+                        <div class="comp-info">
+                            <h4>نقص التروية المزمن (Chronic Hypoperfusion)</h4>
+                            <p>حرمان خلايا المخ من الأكسجين والمغذيات الحيوية على المدى الطويل متسبباً في ضمور دماغي.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SLIDE 5: EPIDEMIOLOGY & RISK FACTORS ================= -->
+        <section class="slide" data-index="4" data-notes="الوبائيات: ثنائي القمة (أطفال سن 10، وبالغين 30-40)، أكثر عند النساء، الجينات العائلية، والأمراض المصاحبة كالأنيميا المنجلية وداون.">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <div class="slide-tag">الوبائيات والوراثة &bull; Epidemiology & Etiology</div>
+                    <h2 class="slide-title">التوزيع الوبائي وعوامل الخطورة <span class="slide-subtitle-en">Demographic Profile</span></h2>
+                </div>
+            </div>
+
+            <div class="slide-content">
+                <div class="two-col">
+                    <div style="display:flex; flex-direction:column; gap:16px;">
+                        <div class="glass-card">
+                            <h3 class="card-title"><i class="fa-solid fa-dna" style="color:var(--cyan);"></i> المسببات والاستعداد الوراثي</h3>
+                            <p class="card-desc">
+                                على الرغم من أن السبب الدقيق لا يزال غير محدد بدقة، إلا أن وجود <strong>طفرات جينية محددة (مثل جين RNF213)</strong> وتجمع الحالات داخل العائلات يثبت دور العامل الوراثي، مع انتشار ملحوظ في أصول شرق آسيا (اليابان، كوريا، الصين)، مع تسجيل حالات متزايدة حول العالم.
+                            </p>
+                        </div>
+
+                        <div class="equal-two-col">
+                            <div class="stat-pill">
+                                <div class="stat-num"><i class="fa-solid fa-venus" style="color:#FF4081;"></i></div>
+                                <div class="stat-info">
+                                    <div class="stat-title">أكثر شيوعاً لدى الإناث</div>
+                                    <div class="stat-sub">نسبة الإصابة عند النساء تبلغ ضعف الرجال تقريباً (F:M ≈ 1.8:1).</div>
+                                </div>
+                            </div>
+
+                            <div class="stat-pill">
+                                <div class="stat-num"><i class="fa-solid fa-child" style="color:var(--cyan);"></i></div>
+                                <div class="stat-info">
+                                    <div class="stat-title">انتشار واسع عند الأطفال</div>
+                                    <div class="stat-sub">الأعراض عند الأطفال تبدأ غالباً بإقفار وسكتات دماغية متكررة.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card" style="border-left:4px solid var(--amber-warn);">
+                            <h4 style="color:var(--text-pure); margin-bottom:6px;"><i class="fa-solid fa-link" style="color:var(--amber-warn);"></i> الحالات المتلازمة المصاحبة (Associated Syndromes)</h4>
+                            <p style="font-size:0.92rem; color:var(--text-body);">
+                                • فقر الدم المنجلي (Sickle Cell Disease) &nbsp;|&nbsp; • متلازمة داون (Down Syndrome) &nbsp;|&nbsp; • الورام الليفي العصبي (NF Type-1).
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Bimodal Distribution Graph Card -->
+                    <div class="glass-card" style="display:flex; flex-direction:column; justify-content:center; gap:20px; text-align:center;">
+                        <h3 class="card-title" style="color:var(--cyan);"><i class="fa-solid fa-chart-area"></i> نمط ثنائي القمة (Bimodal Peaks)</h3>
+                        
+                        <div style="background:rgba(2, 15, 32, 0.7); border-radius:14px; padding:20px; border:1px solid rgba(0,229,255,0.2);">
+                            <div style="font-size:2.8rem; font-weight:900; color:var(--cyan); font-family:var(--font-mono);">~10 سنوات</div>
+                            <div style="font-size:1.1rem; font-weight:700; color:var(--text-pure);">القمة الأولى (الأطفال)</div>
+                            <div style="font-size:0.85rem; color:var(--text-dim); margin-top:4px;">تغلب عليها السكتات الإقفارية ونوبات TIA أثناء البكاء أو فرط التنفس.</div>
+                        </div>
+
+                        <div style="background:rgba(2, 15, 32, 0.7); border-radius:14px; padding:20px; border:1px solid rgba(30,136,229,0.3);">
+                            <div style="font-size:2.8rem; font-weight:900; color:var(--blue-soft); font-family:var(--font-mono);">30 – 40 سنة</div>
+                            <div style="font-size:1.1rem; font-weight:700; color:var(--text-pure);">القمة الثانية (البالغون)</div>
+                            <div style="font-size:0.85rem; color:var(--text-dim); margin-top:4px;">تغلب عليها السكتات النزفية نتيجة انفجار الأوعية الجانبية الهشة.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SLIDE 6: CLINICAL PRESENTATION ================= -->
+        <section class="slide" data-index="5" data-notes="المظاهر السريرية: ثلاث فئات رئيسية - عصبية (نوبات صرع، صداع، جلطات)، حركية (شلل شقي، رقص، صعوبة مشي)، ومعرفية سلوكية (تراجع دراسي وتأخر نمائي).">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <div class="slide-tag">المظاهر والأعراض &bull; Clinical Manifestations</div>
+                    <h2 class="slide-title">العلامات والأعراض السريرية <span class="slide-subtitle-en">Symptomatology</span></h2>
+                </div>
+            </div>
+
+            <div class="slide-content">
+                <div class="three-col-cards">
+                    <!-- Column 1: Neurological -->
+                    <div class="glass-card">
+                        <div class="card-icon"><i class="fa-solid fa-brain"></i></div>
+                        <h3 class="card-title">1. مظاهر عصبية</h3>
+                        <p style="font-family:var(--font-en); font-size:0.85rem; color:var(--cyan); margin-bottom:12px;">Neurological Signs</p>
+                        <ul class="feature-list">
+                            <li class="feature-item"><i class="fa-solid fa-angle-left feature-bullet"></i><span><strong>نوبات نقص التروية (TIAs)</strong> عابرة ومتكررة.</span></li>
+                            <li class="feature-item"><i class="fa-solid fa-angle-left feature-bullet"></i><span><strong>سكتات إقفارية ونزفية</strong> تسبب تلفاً دائماً.</span></li>
+                            <li class="feature-item"><i class="fa-solid fa-angle-left feature-bullet"></i><span><strong>نوبات تشنج وصرع (Seizures)</strong>.</span></li>
+                            <li class="feature-item"><i class="fa-solid fa-angle-left feature-bullet"></i><span><strong>صداع متكرر وعنيف</strong> مقاوم للمسكنات.</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 2: Motor -->
+                    <div class="glass-card">
+                        <div class="card-icon"><i class="fa-solid fa-person-walking"></i></div>
+                        <h3 class="card-title">2. مظاهر حركية</h3>
+                        <p style="font-family:var(--font-en); font-size:0.85rem; color:var(--cyan); margin-bottom:12px;">Motor Impairments</p>
+                        <ul class="feature-list">
+                            <li class="feature-item"><i class="fa-solid fa-angle-left feature-bullet"></i><span><strong>ضعف شقي (Hemiparesis)</strong> في أحد نصفي الجسم.</span></li>
+                            <li class="feature-item"><i class="fa-solid fa-angle-left feature-bullet"></i><span><strong>شلل نصفي كامل (Hemiplegia)</strong>.</span></li>
+                            <li class="feature-item"><i class="fa-solid fa-angle-left feature-bullet"></i><span><strong>صعوبة واضطراب المشي</strong> واختلال التوازن.</span></li>
+                            <li class="feature-item"><i class="fa-solid fa-angle-left feature-bullet"></i><span><strong>حركات لاإرادية غير منتظمة (Chorea)</strong>.</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 3: Cognitive & Behavioral -->
+                    <div class="glass-card">
+                        <div class="card-icon"><i class="fa-solid fa-lightbulb"></i></div>
+                        <h3 class="card-title">3. مظاهر معرفية وسلوكية</h3>
+                        <p style="font-family:var(--font-en); font-size:0.85rem; color:var(--cyan); margin-bottom:12px;">Cognitive & Behavioral</p>
+                        <ul class="feature-list">
+                            <li class="feature-item"><i class="fa-solid fa-angle-left feature-bullet"></i><span><strong>تدهور الذاكرة</strong> وصعوبة استرجاع المعلومات.</span></li>
+                            <li class="feature-item"><i class="fa-solid fa-angle-left feature-bullet"></i><span><strong>صعوبات تعلم حادة</strong> وتراجع التحصيل المدرسي.</span></li>
+                            <li class="feature-item"><i class="fa-solid fa-angle-left feature-bullet"></i><span><strong>تشتت وضعف التركيز</strong> الذهني المستمر.</span></li>
+                            <li class="feature-item"><i class="fa-solid fa-angle-left feature-bullet"></i><span><strong>تأخر نمائي شامل</strong> عند الرضع والأطفال.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SLIDE 7: DIAGNOSTIC WORKUP ================= -->
+        <section class="slide" data-index="6" data-notes="التشخيص: الخطوات التصويرية، تفضيل الرنين لاحتشاءات الإقفار، دور الأشعة المقطعية للطوارئ، والمعيار الذهبي DSA مع دراسات التروية للتحضير الجراحي.">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <div class="slide-tag">البروتوكول التشخيصي &bull; Diagnostic Modalities</div>
+                    <h2 class="slide-title">التشخيص والتصوير الشعاعي <span class="slide-subtitle-en">Imaging & Workup</span></h2>
+                </div>
+            </div>
+
+            <div class="slide-content">
+                <div class="two-col">
+                    <div style="display:flex; flex-direction:column; gap:16px;">
+                        <!-- MRI / MRA -->
+                        <div class="glass-card">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                <h3 class="card-title" style="margin:0;"><i class="fa-solid fa-magnet" style="color:var(--cyan);"></i> الرنين المغناطيسي وقسطرته (MRI / MRA)</h3>
+                                <span class="badge-pill" style="padding:2px 10px; font-size:0.75rem;">الخط الأول &bull; First-Line</span>
+                            </div>
+                            <p class="card-desc">
+                                الرنين المغناطيسي (MRI) يكشف الاحتشاءات الإقفارية الحديثة والقديمة بدقة فائقة. تصوير الأوعية بالرنين (MRA) غير تداخلي ويوضح تضيّق الشريان السباتي الباطن وتفرعاته بدون إشعاع، وهو مثالي للمتابعة.
+                            </p>
+                        </div>
+
+                        <!-- CT / CTA -->
+                        <div class="glass-card">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                <h3 class="card-title" style="margin:0;"><i class="fa-solid fa-x-ray" style="color:var(--blue-soft);"></i> المقطعية وقسطرتها (CT & CTA)</h3>
+                                <span class="badge-pill" style="padding:2px 10px; font-size:0.75rem; border-color:var(--blue-soft); color:var(--blue-soft);">طوارئ &bull; Emergency</span>
+                            </div>
+                            <p class="card-desc">
+                                الأسلوب الأسرع في غرف الطوارئ لاستبعاد النزيف الدماغي الحاد وتحديد حجم الجلطة مع رسم شرايين الدماغ بـ CTA لتقييم الانسداد بدقة سريعة.
+                            </p>
+                        </div>
+
+                        <!-- Perfusion Studies -->
+                        <div class="glass-card">
+                            <h3 class="card-title"><i class="fa-solid fa-water" style="color:var(--emerald-good);"></i> دراسات التروية الدماغية (Perfusion Studies)</h3>
+                            <p class="card-desc">
+                                تقييم الاحتياطي الوعائي الدموي (Cerebrovascular Reserve)، وتعتبر حجر الزاوية عند التخطيط للجراحة الترقيعية لتحديد المناطق الأكثر حرماناً من الدم.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- DSA Gold Standard Highlight Card -->
+                    <div class="glass-card" style="border:2px solid var(--cyan); background:rgba(3, 20, 44, 0.9); display:flex; flex-direction:column; justify-content:space-between;">
+                        <div>
+                            <div class="card-icon" style="background:var(--cyan); color:#011124;"><i class="fa-solid fa-award"></i></div>
+                            <div class="badge-pill" style="margin-bottom:12px;">المعيار الذهبي المطلق &bull; GOLD STANDARD</div>
+                            <h3 style="font-size:1.6rem; font-weight:800; color:var(--text-pure); margin-bottom:12px;">القسطرة الرقمية الظليلة (DSA)</h3>
+                            <p style="font-size:0.95rem; line-height:1.6; color:var(--text-body);">
+                                تظل <strong>Digital Subtraction Angiography</strong> الفحص الأكمل والنهائي لتشخيص وتصنيف درجات مويا مويا (مراحل سوزوكي الستة Suzuki Stages)؛ حيث تبرز بدقة مجهرية تضيق السباتي الباطن الطرفي وشبكة الأوعية القاعدية الهشة المتشابكة.
+                            </p>
+                        </div>
+
+                        <div class="stat-pill" style="margin-top:20px; background:rgba(0, 229, 255, 0.1);">
+                            <i class="fa-solid fa-circle-info" style="font-size:1.6rem; color:var(--cyan);"></i>
+                            <div style="font-size:0.85rem; color:var(--text-body);">
+                                توفر خريطة وعائية حاسمة لجراح الأعصاب لتحديد شريان التروية السطحي المناسب قبل العملية.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SLIDE 8: MEDICAL & SUPPORTIVE CARE ================= -->
+        <section class="slide" data-index="7" data-notes="العلاج الطبي والداعم: الترطيب الجيد لمنع اللزوجة وتجنب هبوط الضغط، التمييز بين مضادات الصفيحات الموصى بها ومضادات التخثر الممنوعة عموماً، وحاصرات الكالسيوم للصداع.">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <div class="slide-tag">الرعاية التحفظية &bull; Medical & Supportive Protocol</div>
+                    <h2 class="slide-title">العلاج الدوائي والرعاية الداعمة <span class="slide-subtitle-en">Conservative Management</span></h2>
+                </div>
+            </div>
+
+            <div class="slide-content">
+                <div class="equal-two-col">
+                    <!-- Left: Supportive Care -->
+                    <div class="glass-card" style="display:flex; flex-direction:column; gap:16px;">
+                        <h3 class="card-title" style="color:var(--cyan);"><i class="fa-solid fa-notes-medical"></i> 1. الرعاية الداعمة (Supportive Care)</h3>
+                        <p class="card-desc">تهدف لحماية الدماغ من أي هبوط في التروية يفاقم الإقفار:</p>
+
+                        <div class="feature-item">
+                            <i class="fa-solid fa-faucet-drip feature-bullet"></i>
+                            <div class="feature-text">
+                                <strong>الترطيب المستمر (Adequate Hydration)</strong>
+                                منع الجفاف وتقليل لزوجة الدم لتسهيل مروره عبر الأوعية المتضيقة والتعويضية.
+                            </div>
+                        </div>
+
+                        <div class="feature-item">
+                            <i class="fa-solid fa-gauge-simple-high feature-bullet"></i>
+                            <div class="feature-text">
+                                <strong>تجنب هبوط الضغط (Avoid Hypotension)</strong>
+                                هبوط الضغط المفاجئ قد يسبب سكتة إقفارية كارثية بسبب غياب الاحتياطي الوعائي.
+                            </div>
+                        </div>
+
+                        <div class="feature-item">
+                            <i class="fa-solid fa-capsules feature-bullet"></i>
+                            <div class="feature-text">
+                                <strong>السيطرة الصارمة على التشنجات</strong>
+                                التشنج يرفع استهلاك المخ للأكسجين؛ لذا تُستخدم مضادات الصرع للوقاية والتحكم.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Medical Therapies -->
+                    <div class="glass-card" style="display:flex; flex-direction:column; gap:16px;">
+                        <h3 class="card-title" style="color:var(--blue-soft);"><i class="fa-solid fa-pills"></i> 2. العلاج الدوائي الموجه (Pharmacotherapy)</h3>
+                        
+                        <!-- Antiplatelets -->
+                        <div style="background:rgba(0, 230, 118, 0.08); border:1px solid rgba(0, 230, 118, 0.3); border-radius:12px; padding:14px;">
+                            <div style="display:flex; align-items:center; gap:8px; color:var(--emerald-good); font-weight:700; margin-bottom:4px;">
+                                <i class="fa-solid fa-shield-virus"></i> مضادات الصفيحات (Antiplatelets)
+                            </div>
+                            <p style="font-size:0.88rem; color:var(--text-body);">
+                                مثل <strong>الأسبرين (Aspirin)</strong>: يُقلل من تجمع الصفيحات وتكوّن الخثرات، مما يخفف من خطر السكتات الإقفارية المتكررة.
+                            </p>
+                        </div>
+
+                        <!-- Anticoagulants Warning -->
+                        <div style="background:rgba(255, 82, 82, 0.08); border:1px solid rgba(255, 82, 82, 0.35); border-radius:12px; padding:14px;">
+                            <div style="display:flex; align-items:center; gap:8px; color:var(--coral-alert); font-weight:700; margin-bottom:4px;">
+                                <i class="fa-solid fa-triangle-exclamation"></i> مضادات التخثر (Anticoagulants) &bull; تحذير
+                            </div>
+                            <p style="font-size:0.88rem; color:var(--text-body);">
+                                مثل <strong>الوارفارين (Warfarin)</strong>: <span style="color:var(--coral-alert); font-weight:700;">يُتجنب استخدامها بشكل عام</span> لخطورتها العالية في إحداث نزيف دماغي مميت من الأوعية الهشة، ولا تُعطى إلا بدواعٍ نادرة جداً.
+                            </p>
+                        </div>
+
+                        <!-- CCBs -->
+                        <div style="background:rgba(0, 229, 255, 0.06); border:1px solid rgba(0, 229, 255, 0.2); border-radius:12px; padding:14px;">
+                            <div style="display:flex; align-items:center; gap:8px; color:var(--cyan); font-weight:700; margin-bottom:4px;">
+                                <i class="fa-solid fa-bolt"></i> حاصرات قنوات الكالسيوم (Calcium Channel Blockers)
+                            </div>
+                            <p style="font-size:0.88rem; color:var(--text-body);">
+                                تساهم في تخفيف الصداع الوعائي وتقليل معدل حدوث نوبات نقص التروية العابرة (TIAs).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SLIDE 9: SURGICAL REVASCULARIZATION ================= -->
+        <section class="slide" data-index="8" data-notes="الجراحة هي الحل الجذري والنهائي: إعادة التروية المباشرة STA-MCA، وغير المباشرة (EDAS)، والمدمجة. استعراض الرسم التوضيحي للجراحة مع شرح آليتها.">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <div class="slide-tag">التدخل الجذري الحاسم &bull; Definitive Treatment</div>
+                    <h2 class="slide-title">جراحة إعادة التروية الدماغية <span class="slide-subtitle-en">Surgical Revascularization</span></h2>
+                </div>
+            </div>
+
+            <div class="slide-content">
+                <div class="two-col">
+                    <div style="display:flex; flex-direction:column; gap:16px;">
+                        <div class="glass-card" style="border-right:4px solid var(--emerald-good);">
+                            <span class="badge-pill" style="border-color:var(--emerald-good); color:var(--emerald-good); margin-bottom:8px;">العلاج الشافي والنهائي &bull; GOLD THERAPY</span>
+                            <h3 class="card-title">الهدف الاستراتيجي للجراحة</h3>
+                            <p class="card-desc">
+                                استعادة التروية الدموية المستدامة لأنسجة المخ المعرضة للموت، وخفض الضغط على الأوعية الجانبية الهشة لمنع تكرار النزيف والجلطات الدماغية.
+                            </p>
+                        </div>
+
+                        <div class="surgery-split">
+                            <!-- Direct -->
+                            <div class="surgery-box highlighted">
+                                <span class="surgery-badge">مباشرة &bull; Direct</span>
+                                <h4 style="color:var(--text-pure); font-size:1.05rem; margin-bottom:6px;">مجازة STA–MCA</h4>
+                                <p style="font-size:0.85rem; color:var(--text-body); line-height:1.45;">
+                                    توصيل مباشر بين الشريان الصدغي السطحي (STA) والشريان المخي الأوسط (MCA) لتوفير تدفق دموي <strong>فوري ولحظي</strong> للأنسجة.
+                                </p>
+                            </div>
+
+                            <!-- Indirect -->
+                            <div class="surgery-box">
+                                <span class="surgery-badge" style="background:rgba(30,136,229,0.2); color:var(--blue-soft);">غير مباشرة &bull; Indirect</span>
+                                <h4 style="color:var(--text-pure); font-size:1.05rem; margin-bottom:6px;">تحفيز الأوعية (EDAS/EMS)</h4>
+                                <p style="font-size:0.85rem; color:var(--text-body); line-height:1.45;">
+                                    وضع أنسجة ذات تروية غنية (عضلات/سحايا) على سطح القشرة لتحفيز نمو أوعية دموية جديدة تدريجياً، وهي خيار مثالي للأطفال.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Combined -->
+                        <div class="feature-item" style="background:rgba(0, 229, 255, 0.08); border-color:var(--cyan);">
+                            <i class="fa-solid fa-code-merge feature-bullet" style="color:var(--cyan);"></i>
+                            <div class="feature-text">
+                                <strong>الجراحة المشتركة المدمجة (Combined Revascularization)</strong>
+                                تجمع بين المجازة المباشرة والتحفيز غير المباشر، وتمنح المريض تروية فورية متكاملة مع تحسن طويل الأمد.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Surgical Diagram Image -->
+                    <div style="display:flex; flex-direction:column; gap:10px;">
+                        <div class="medical-image-box" style="height:380px;" onclick="openImageModal('media/image3.jpg', 'مخطط جراحة مفاغرة الشريان الصدغي السطحي مع الشريان المخي الأوسط (STA-MCA Bypass)')">
+                            <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> تكبير المخطط</span>
+                            <img src="media/image3.jpg" alt="STA-MCA Bypass Surgery Diagram">
+                            <div class="image-caption"><i class="fa-solid fa-scissors"></i> تقنية جراحة مجازة STA–MCA الدقيقة</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SLIDE 10: CONCLUSION & HOPE ================= -->
+        <section class="slide" data-index="9" data-notes="الخاتمة والتوصيات: أهمية الرعاية بعد الجراحة والمتابعة الشعاعية، نشر الوعي بالمرض في ليبيا والمنطقة، وختام المؤتمر بشعار 'نحن صناع الأمل'.">
+            <div class="slide-header">
+                <div class="slide-title-group">
+                    <div class="slide-tag">الرعاية اللاحقة والخاتمة &bull; Postoperative Care & Conclusion</div>
+                    <h2 class="slide-title">مستقبل مرضى مويا مويا ورسالة الأمل <span class="slide-subtitle-en">Hope & Outlook</span></h2>
+                </div>
+            </div>
+
+            <div class="slide-content">
+                <div class="two-col">
+                    <div style="display:flex; flex-direction:column; gap:16px;">
+                        <div class="glass-card">
+                            <h3 class="card-title" style="color:var(--cyan);"><i class="fa-solid fa-user-doctor"></i> بروتوكول ما بعد الجراحة (Postoperative Care)</h3>
+                            <ul class="feature-list" style="margin-top:10px;">
+                                <li class="feature-item"><i class="fa-solid fa-check feature-bullet"></i><span><strong>مراقبة عصبية دقيقة ومكثفة</strong> في وحدة العناية الحرجة للكشف عن فرط التروية (Hyperperfusion).</span></li>
+                                <li class="feature-item"><i class="fa-solid fa-check feature-bullet"></i><span><strong>التحكم الصارم بضغط الدم</strong> لمنع النزف المفاجئ أو تلف التوصيلة الشريانية.</span></li>
+                                <li class="feature-item"><i class="fa-solid fa-check feature-bullet"></i><span><strong>متابعة دورية بالتصوير (MRA / Angiography)</strong> لضمان نفاذية المجازة ونمو الشرايين.</span></li>
+                                <li class="feature-item"><i class="fa-solid fa-check feature-bullet"></i><span><strong>برامج التأهيل الحركي والنطقي</strong> لاستعادة الوظائف العصبية المفقودة.</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Closing Card with Logo & Motto -->
+                    <div class="glass-card" style="text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; border:2px solid var(--border-glow); background:rgba(3, 19, 42, 0.85);">
+                        <img src="logo.png" alt="Moyamoya Logo" style="width:90px; height:90px; object-fit:contain; filter:drop-shadow(0 0 16px rgba(0,229,255,0.6));">
+                        
+                        <div>
+                            <div style="font-family:var(--font-en); font-size:1.1rem; font-weight:800; color:var(--cyan); letter-spacing:1px;">MOYAMOYA TRIPOLI CONFERENCE</div>
+                            <div style="font-size:0.95rem; color:var(--text-dim); margin-top:2px;">مؤتمر طرابلس التوعوي والطبي لمرض مويا مويا</div>
+                        </div>
+
+                        <div style="border-top:1px solid rgba(0,229,255,0.2); width:80%; padding-top:16px;">
+                            <div style="font-size:1.8rem; font-weight:900; color:#fff; text-shadow:0 0 20px var(--cyan);">
+                                "نحنُ صنّاعُ الأمل"
+                            </div>
+                            <div style="font-size:0.9rem; color:var(--blue-soft); margin-top:4px;">
+                                تنظيم: مبادرة تنفّس وعي &bull; معاً لإنقاذ كل نبضة
+                            </div>
+                        </div>
+
+                        <button class="btn-nav" style="margin-top:10px;" onclick="goToSlide(0)">
+                            <i class="fa-solid fa-rotate-left"></i> إعادة العرض من البداية
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================================
+         BOTTOM CONTROLS BAR
+         ======================================================== -->
+    <footer class="bottom-bar">
+        <div class="bottom-left-info">
+            <div class="hotkeys-hint">
+                <span>التنقل: <span class="kbd">←</span> <span class="kbd">→</span> أو <span class="kbd">Space</span></span>
+                <span>ملء الشاشة: <span class="kbd">F</span></span>
+                <span>الفهرس: <span class="kbd">O</span></span>
+                <span>الليزر: <span class="kbd">L</span></span>
+            </div>
+        </div>
+
+        <div class="slide-dots" id="slideDots">
+            <!-- Dynamically populated dots -->
+        </div>
+
+        <div class="nav-buttons-center">
+            <button class="btn-nav" id="prevBtn" onclick="prevSlide()">
+                <i class="fa-solid fa-chevron-right"></i> السابق
+            </button>
+            <button class="btn-nav" id="nextBtn" onclick="nextSlide()">
+                التالي <i class="fa-solid fa-chevron-left"></i>
+            </button>
+        </div>
+    </footer>
+
+    <!-- ========================================================
+         SPEAKER NOTES DRAWER
+         ======================================================== -->
+    <div class="notes-drawer" id="notesDrawer">
+        <div class="notes-header">
+            <h5><i class="fa-regular fa-clipboard"></i> ملاحظات المتحدث (Speaker Notes)</h5>
+            <button class="btn-icon" style="width:28px; height:28px;" onclick="toggleNotes()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="notes-body" id="notesContent">
+            شريحة البداية...
+        </div>
+    </div>
+
+    <!-- ========================================================
+         OVERVIEW GRID MODAL
+         ======================================================== -->
+    <div class="overview-modal" id="overviewModal">
+        <div class="overview-header">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <img src="logo.png" style="width:36px; height:36px;">
+                <h3 style="color:#fff; font-size:1.3rem;">فهرس كافة الشرائح (Slide Index)</h3>
+            </div>
+            <button class="btn-icon" style="width:38px; height:38px;" onclick="toggleOverview()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="overview-grid" id="overviewGrid">
+            <!-- Dynamically filled with thumbnails -->
+        </div>
+    </div>
+
+    <!-- ========================================================
+         LIGHTBOX IMAGE MODAL
+         ======================================================== -->
+    <div class="image-modal" id="imageModal" onclick="closeImageModal()">
+        <button class="modal-close-btn" onclick="closeImageModal()"><i class="fa-solid fa-xmark"></i></button>
+        <div class="modal-content-wrap" onclick="event.stopPropagation()">
+            <img src="" alt="Zoomed Medical" class="modal-img" id="modalImg">
+            <div class="modal-caption" id="modalCaption"></div>
+        </div>
+    </div>
+
+    <!-- ========================================================
+         JAVASCRIPT CONTROLLER
+         ======================================================== -->
+    <script>
+        // State
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const progressBar = document.getElementById('progressBar');
+        const currentSlideNum = document.getElementById('currentSlideNum');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const slideDotsContainer = document.getElementById('slideDots');
+        const notesDrawer = document.getElementById('notesDrawer');
+        const notesContent = document.getElementById('notesContent');
+        const notesBtn = document.getElementById('notesBtn');
+        const overviewModal = document.getElementById('overviewModal');
+        const overviewGrid = document.getElementById('overviewGrid');
+        const overviewBtn = document.getElementById('overviewBtn');
+        const laserBtn = document.getElementById('laserBtn');
+        const laserPointer = document.getElementById('laserPointer');
+        let laserActive = false;
+
+        // Slide Titles for Index
+        const slideTitles = [
+            "1. الغلاف والافتتاحية",
+            "2. ما هو مرض مويا مويا؟",
+            "3. ظاهرة نفثة الدخان الوعائية",
+            "4. مضاعفات الأوعية الست الخطيرة",
+            "5. الوبائيات وعوامل الخطورة",
+            "6. الأعراض السريرية الثلاثية",
+            "7. الفحوصات والتصوير التشخيصي",
+            "8. العلاج الدوائي والتحفظي",
+            "9. الجراحة وإعادة التروية STA-MCA",
+            "10. رعاية ما بعد الجراحة ورسالة الأمل"
+        ];
+
+        // Initialize Indicators & Grid
+        function initDeck() {
+            // Dots
+            slideDotsContainer.innerHTML = '';
+            overviewGrid.innerHTML = '';
+
+            slides.forEach((slide, idx) => {
+                // Dot
+                const dot = document.createElement('div');
+                dot.className = `dot ${idx === 0 ? 'active' : ''}`;
+                dot.title = slideTitles[idx] || `الشريحة ${idx + 1}`;
+                dot.onclick = () => goToSlide(idx);
+                slideDotsContainer.appendChild(dot);
+
+                // Overview Card
+                const card = document.createElement('div');
+                card.className = `overview-card ${idx === 0 ? 'current' : ''}`;
+                card.onclick = () => {
+                    goToSlide(idx);
+                    toggleOverview();
+                };
+                card.innerHTML = `
+                    <div class="overview-card-num">SLIDE 0${idx + 1}</div>
+                    <div class="overview-card-title">${slideTitles[idx]}</div>
+                `;
+                overviewGrid.appendChild(card);
+            });
+
+            updateSlideUI();
+            startTimer();
+            initSynapseCanvas();
+        }
+
+        // Navigation
+        function goToSlide(index) {
+            if (index < 0 || index >= totalSlides) return;
+            
+            slides[currentSlide].classList.remove('active', 'prev-slide', 'next-slide');
+            if (index > currentSlide) {
+                slides[currentSlide].classList.add('prev-slide');
+            } else {
+                slides[currentSlide].classList.add('next-slide');
+            }
+
+            currentSlide = index;
+
+            slides.forEach((s, i) => {
+                s.classList.remove('active', 'prev-slide', 'next-slide');
+                if (i === currentSlide) {
+                    s.classList.add('active');
+                } else if (i < currentSlide) {
+                    s.classList.add('prev-slide');
+                } else {
+                    s.classList.add('next-slide');
+                }
+            });
+
+            updateSlideUI();
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                goToSlide(currentSlide + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                goToSlide(currentSlide - 1);
+            }
+        }
+
+        function updateSlideUI() {
+            // Update counter
+            currentSlideNum.textContent = String(currentSlide + 1).padStart(2, '0');
+
+            // Progress bar
+            const percent = ((currentSlide + 1) / totalSlides) * 100;
+            progressBar.style.width = `${percent}%`;
+
+            // Buttons state
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+
+            // Dots
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentSlide);
+            });
+
+            // Overview cards
+            const cards = document.querySelectorAll('.overview-card');
+            cards.forEach((card, idx) => {
+                card.classList.toggle('current', idx === currentSlide);
+            });
+
+            // Notes
+            const activeSlide = slides[currentSlide];
+            const notes = activeSlide.getAttribute('data-notes') || 'لا توجد ملاحظات لهذه الشريحة.';
+            notesContent.textContent = notes;
+        }
+
+        // Speaker Notes Toggle
+        function toggleNotes() {
+            notesDrawer.classList.toggle('open');
+            notesBtn.classList.toggle('active', notesDrawer.classList.contains('open'));
+        }
+
+        // Overview Modal Toggle
+        function toggleOverview() {
+            overviewModal.classList.toggle('open');
+            overviewBtn.classList.toggle('active', overviewModal.classList.contains('open'));
+        }
+
+        // Fullscreen Toggle
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log("Fullscreen request failed", err);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Virtual Laser Pointer
+        function toggleLaser() {
+            laserActive = !laserActive;
+            laserBtn.classList.toggle('active', laserActive);
+            laserPointer.style.display = laserActive ? 'block' : 'none';
+            document.body.style.cursor = laserActive ? 'none' : 'default';
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            if (laserActive) {
+                laserPointer.style.left = `${e.clientX}px`;
+                laserPointer.style.top = `${e.clientY}px`;
+            }
+        });
+
+        // Lightbox Image Zoom
+        function openImageModal(src, caption) {
+            const modal = document.getElementById('imageModal');
+            const img = document.getElementById('modalImg');
+            const cap = document.getElementById('modalCaption');
+            img.src = src;
+            cap.textContent = caption || '';
+            modal.classList.add('open');
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('open');
+        }
+
+        // Presentation Timer
+        let secondsElapsed = 0;
+        function startTimer() {
+            const timerEl = document.getElementById('presentationTimer');
+            setInterval(() => {
+                secondsElapsed++;
+                const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+                const secs = String(secondsElapsed % 60).padStart(2, '0');
+                timerEl.textContent = `${mins}:${secs}`;
+            }, 1000);
+        }
+
+        // Keyboard Controls
+        window.addEventListener('keydown', (e) => {
+            // If image modal open, Esc closes it
+            if (document.getElementById('imageModal').classList.contains('open')) {
+                if (e.key === 'Escape') closeImageModal();
+                return;
+            }
+            // If overview open, Esc closes it
+            if (overviewModal.classList.contains('open')) {
+                if (e.key === 'Escape') toggleOverview();
+                return;
+            }
+
+            switch(e.key) {
+                case 'ArrowLeft':
+                case 'ArrowDown':
+                case 'PageDown':
+                case ' ':
+                case 'Enter':
+                    nextSlide();
+                    break;
+                case 'ArrowRight':
+                case 'ArrowUp':
+                case 'PageUp':
+                    prevSlide();
+                    break;
+                case 'Home':
+                    goToSlide(0);
+                    break;
+                case 'End':
+                    goToSlide(totalSlides - 1);
+                    break;
+                case 'f':
+                case 'F':
+                    toggleFullscreen();
+                    break;
+                case 'o':
+                case 'O':
+                    toggleOverview();
+                    break;
+                case 'n':
+                case 'N':
+                    toggleNotes();
+                    break;
+                case 'l':
+                case 'L':
+                    toggleLaser();
+                    break;
+                case 'Escape':
+                    if (notesDrawer.classList.contains('open')) toggleNotes();
+                    if (laserActive) toggleLaser();
+                    break;
+            }
+        });
+
+        // Touch Gestures (Swipe for Mobile/Tablet)
+        let touchStartX = 0;
+        let touchEndX = 0;
+        window.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        window.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const diff = touchEndX - touchStartX;
+            if (Math.abs(diff) > 50) {
+                // In RTL: Swipe left = next, Swipe right = previous
+                if (diff < 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+        }
+
+        // Animated Synapse Canvas Background
+        function initSynapseCanvas() {
+            const canvas = document.getElementById('synapseCanvas');
+            const ctx = canvas.getContext('2d');
+            let w, h;
+            let particles = [];
+
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            const particleCount = 45;
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
+                    radius: Math.random() * 2 + 1,
+                    alpha: Math.random() * 0.5 + 0.2
+                });
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, w, h);
+
+                // Draw connections
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < 130) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(0, 229, 255, ${0.12 * (1 - dist / 130)})`;
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                // Draw particles
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0) p.x = w;
+                    if (p.x > w) p.x = 0;
+                    if (p.y < 0) p.y = h;
+                    if (p.y > h) p.y = 0;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(0, 229, 255, ${p.alpha})`;
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        // Initialize on DOM Ready
+        document.addEventListener('DOMContentLoaded', initDeck);
+    </script>
+</body>
+</html>
+
